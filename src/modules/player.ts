@@ -1,10 +1,13 @@
 import Hls from 'hls.js';
+
+// import playerState from '../../utils/state/global';
+// import playerStateSetter from '../../utils/state/playerStateSetter';
+
 const pendingCalls: any = [];
 
 let soundManager: any;
 let hlsRef: any;
 let hlsAudio: any;
-
 // Allow server side rendering
 if (typeof window !== 'undefined') {
   if (process.env.NODE_ENV !== 'production') {
@@ -26,31 +29,22 @@ player.play = (track: any) => {
     currentVolume = soundManager.sounds.tarana.volume;
   }
   player.cleanUp();
-  console.log('============', track);
   const type = track.url.indexOf('.m3u8') === -1 ? 'sm2' : 'hls';
 
   if (type === 'hls') {
-    const audio = document.createElement('audio');
-    audio.setAttribute('id', 'hls-audio');
-
-    hlsAudio = audio;
-    console.log('============', hlsAudio);
+    hlsAudio = document.getElementById('hls-audio');
     if (Hls.isSupported()) {
       player.cleanUp();
       console.log(' *************', hlsRef);
       const hls = new Hls({
         enableWorker: false,
-        debug: true,
       });
       hls.loadSource(track.url);
       hls.attachMedia(hlsAudio);
       hls.on(Hls.Events.MANIFEST_PARSED, () => {
         hlsAudio.play();
       });
-      // window.hls = hlsAudio;
-      // window.hlsRef = hls;
-      // window.hlsAudio = hlsAudio;
-      // hlsRef = hlsAudio;
+      hlsRef = hls;
 
       hls.on(Hls.Events.AUDIO_TRACKS_UPDATED, (eventName, data) => {
         console.log(`Error event: ${eventName} `, data);
@@ -74,11 +68,11 @@ player.play = (track: any) => {
 
       hlsAudio.addEventListener('error', (evt: any) => {
         const mediaError = evt.currentTarget.error;
-        console.log(`---------> Playing`, mediaError);
+        // console.log(`---------> Playing`, mediaError);
       });
 
       hlsAudio.addEventListener('volumechange', () => {
-        console.log(`---------> volumeChange`);
+        // console.log(`---------> volumeChange`);
       });
     }
     return;
@@ -88,11 +82,11 @@ player.play = (track: any) => {
     id: 'tarana',
     volume: currentVolume,
     stream: true,
-    // whileplaying() {
-    //   if (!playerState.playing.get() && sound.playState === 1) {
-    //     // playerStateSetter.playing(track, type);
-    //   }
-    // },
+    whileplaying() {
+      // if (!playerState.playing.get() && sound.playState === 1) {
+      //   playerStateSetter.playing(track, type);
+      // }
+    },
 
     whileloading() {},
     onerror(errorCode: any, description: any) {
@@ -110,9 +104,15 @@ player.play = (track: any) => {
       // playerStateSetter.buffering();
     },
     onfinish() {},
+
+    onstalled() {
+      console.log('---------> stalled');
+      (window as any).soundManager = null;
+      sound.play();
+    },
   });
   sound.play();
-  // window.soundManager = null;
+  (window as any).soundManager = null;
 };
 
 player.pause = () => {
@@ -126,11 +126,11 @@ player.pause = () => {
 };
 
 player.setVolume = (volume: any) => {
-  // if (playerState.type.get() === "hls") {
+  // if (playerState.type.get() === 'hls') {
   //   hlsAudio.volume = volume / 100;
   //   return;
   // }
-  soundManager.setVolume(volume);
+  // soundManager.setVolume(volume);
 };
 
 player.mute = () => {
@@ -146,11 +146,10 @@ player.cleanUp = () => {
 
     // playerStateSetter.cleanUp();
   }
-  // if (playerState.type.get() === 'hls') {
-  console.log('cleanUp', hlsRef);
-  // hlsRef.destroy();
-  // playerStateSetter.cleanUp();
-  // }
+  if (hlsRef) {
+    hlsRef.destroy();
+    // playerStateSetter.cleanUp();
+  }
 };
 
 export default player;

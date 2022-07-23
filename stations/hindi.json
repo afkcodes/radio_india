@@ -300,7 +300,7 @@
       "city": "Mumbai",
       "state": "Maharashtra",
       "country": "India",
-      "streams": "[\"http://peridot.streamguys.com:7150/Mirchi\", \"http://peridot.streamguys.com:7150/Mirchi\"]",
+      "streams": "[\"https://radioindia.net/radio/mirchi98/icecast.audio\"]",
       "icon_image": "http://res.cloudinary.com/megabyt-4/image/upload/v1586787051/tarana-radio-app/thumbnail-icons/india/maharashtra/mumbai/sn-77b578e79bc2e805.png",
       "player_image": "http://res.cloudinary.com/megabytdev/image/upload/v1586659480/tarana-radio-app/media-icons/india/maharashtra/mumbai/sn-77b578e79bc2e805.png"
     },
