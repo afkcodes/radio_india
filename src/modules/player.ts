@@ -1,13 +1,10 @@
 import Hls from 'hls.js';
 
-// import playerState from '../../utils/state/global';
-// import playerStateSetter from '../../utils/state/playerStateSetter';
-
 const pendingCalls: any = [];
-
 let soundManager: any;
 let hlsRef: any;
 let hlsAudio: any;
+
 // Allow server side rendering
 if (typeof window !== 'undefined') {
   if (process.env.NODE_ENV !== 'production') {
@@ -18,7 +15,6 @@ if (typeof window !== 'undefined') {
 
   soundManager.onready(() => {
     pendingCalls.slice().forEach((cb: any) => cb());
-    console.log('Tarana Ready');
   });
 }
 
@@ -35,7 +31,6 @@ player.play = (track: any) => {
     hlsAudio = document.getElementById('hls-audio');
     if (Hls.isSupported()) {
       player.cleanUp();
-      console.log(' *************', hlsRef);
       const hls = new Hls({
         enableWorker: false,
       });
