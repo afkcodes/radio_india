@@ -4,16 +4,32 @@ import Image from 'next/image';
 import hindi from '../../stations/hindi.json';
 
 import player from '../modules/player';
+import useStore from '../states/useStore';
 const Home: NextPage = () => {
   // const stations = hungama.data.stations.filter(
   //   (value, index, self) =>
   //     index === self.findIndex((t) => t.radio_uid === value.radio_uid)
   // );
   // console.log(stations);
+  const { playerStatus, updatePlayerStatus } = useStore((state) => state);
+
+  // console.log('playerStatus----------', playerStatus);
+
   const playRadio = (track: any) => {
     const playTrack: any = { url: JSON.parse(track.streams)[0] };
     player.play(playTrack);
+    updatePlayerStatus({
+      playing: true,
+      paused: false,
+      buffering: false,
+      stopped: false,
+      error: { code: null, description: null },
+      muted: false,
+      nowPlaying: {},
+      type: '',
+    });
   };
+
   return (
     <div className='flex bg-black text-white'>
       <audio id='hls-audio' />
@@ -84,7 +100,7 @@ const Home: NextPage = () => {
           ))}
         </div>
         <div className='w-full flex justify-center sticky bottom-0 z-10 bg-[#111111] py-4 h-18'>
-          Player
+          {JSON.stringify(playerStatus)}
         </div>
       </main>
     </div>
