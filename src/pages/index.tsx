@@ -1,6 +1,5 @@
 import type { NextPage } from 'next';
 import Image from 'next/image';
-// import hungama from '../../stations/radio.json';
 import hindi from '../../stations/hindi.json';
 
 import player from '../modules/player';
@@ -11,28 +10,15 @@ const Home: NextPage = () => {
   //     index === self.findIndex((t) => t.radio_uid === value.radio_uid)
   // );
   // console.log(stations);
-  const { playerStatus, updatePlayerStatus } = useStore((state) => state);
-
-  // console.log('playerStatus----------', playerStatus);
+  const { playerStatus } = useStore((state) => state);
 
   const playRadio = (track: any) => {
-    const playTrack: any = { url: JSON.parse(track.streams)[0] };
-    player.play(playTrack);
-    updatePlayerStatus({
-      playing: true,
-      paused: false,
-      buffering: false,
-      stopped: false,
-      error: { code: null, description: null },
-      muted: false,
-      nowPlaying: {},
-      type: '',
-    });
+    player.play(track);
   };
 
   return (
     <div className='flex bg-black text-white'>
-      <audio id='hls-audio' />
+      <audio id='tarana' />
       <aside className='bg-[#111111] w-[17rem] hidden lg:flex shadow-md justify-center '>
         <ul className='flex flex-col w-full pt-2'>
           <li className='pl-8 py-4 text-md font-semibold sm:motion-safe:hover:text-[#00AC7C] hover:bg-[#00ac7b15] duration-200 focus:outline-none cursor-pointer hover:border-r  border-[#00AC7C]'>
@@ -100,7 +86,18 @@ const Home: NextPage = () => {
           ))}
         </div>
         <div className='w-full flex justify-center sticky bottom-0 z-10 bg-[#111111] py-4 h-18'>
-          {JSON.stringify(playerStatus)}
+          {playerStatus.nowPlaying.player_image ? (
+            <Image
+              src={playerStatus?.nowPlaying?.player_image}
+              height='80'
+              width='80'
+              alt={playerStatus?.nowPlaying?.name}
+              loading='eager'
+            />
+          ) : (
+            <h2></h2>
+          )}
+          {JSON.stringify({ buffering: playerStatus['buffering'] })}
         </div>
       </main>
     </div>

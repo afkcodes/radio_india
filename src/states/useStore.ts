@@ -1,6 +1,6 @@
 import create from 'zustand';
-import createPlayerSlice from './playerStatusSlice/createPlayerSlice';
-import { PlayerStatusSliceTypes } from './playerStatusSlice/types';
+import createPlayerSlice from './slices/player/createPlayerSlice';
+import { PlayerStatusSliceTypes } from './slices/player/types';
 
 export type StoreState = PlayerStatusSliceTypes;
 

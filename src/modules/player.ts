@@ -1,4 +1,7 @@
 import Hls from 'hls.js';
+import playerStateSetter from '../states/setters/player';
+import useStore from '../states/useStore';
+const { playerStatus } = useStore.getState();
 
 const pendingCalls: any = [];
 let soundManager: any;
@@ -25,16 +28,17 @@ player.play = (track: any) => {
     currentVolume = soundManager.sounds.tarana.volume;
   }
   player.cleanUp();
-  const type = track.url.indexOf('.m3u8') === -1 ? 'sm2' : 'hls';
+  const stream = JSON.parse(track.streams)[0];
+  const type = stream.indexOf('.m3u8') === -1 ? 'sm2' : 'hls';
 
   if (type === 'hls') {
-    hlsAudio = document.getElementById('hls-audio');
+    hlsAudio = document.getElementById('tarana');
     if (Hls.isSupported()) {
       player.cleanUp();
       const hls = new Hls({
         enableWorker: false,
       });
-      hls.loadSource(track.url);
+      hls.loadSource(stream);
       hls.attachMedia(hlsAudio);
       hls.on(Hls.Events.MANIFEST_PARSED, () => {
         hlsAudio.play();
@@ -43,60 +47,60 @@ player.play = (track: any) => {
 
       hls.on(Hls.Events.AUDIO_TRACKS_UPDATED, (eventName, data) => {
         console.log(`Error event: ${eventName} `, data);
-        // playerStateSetter.error(eventName, data);
+        playerStateSetter.error(eventName, data);
       });
 
       hlsAudio.addEventListener('canplay', () => {
         console.log(`---------> Buffering`);
-        // playerStateSetter.buffering();
+        playerStateSetter.buffering();
       });
 
       hlsAudio.addEventListener('playing', () => {
         console.log(`---------> Playing`);
-        // playerStateSetter.playing(track, type);
+        playerStateSetter.playing(track, type);
       });
 
       hlsAudio.addEventListener('pause', () => {
         console.log(`---------> Pauses`);
-        // playerStateSetter.cleanUp();
+        playerStateSetter.cleanUp();
       });
 
       hlsAudio.addEventListener('error', (evt: any) => {
         const mediaError = evt.currentTarget.error;
-        // console.log(`---------> Playing`, mediaError);
+        console.log(`---------> Playing`, mediaError);
       });
 
       hlsAudio.addEventListener('volumechange', () => {
-        // console.log(`---------> volumeChange`);
+        console.log(`---------> volumeChange`);
       });
     }
     return;
   }
   const sound = soundManager.createSound({
-    url: track.url,
+    url: stream,
     id: 'tarana',
     volume: currentVolume,
     stream: true,
     whileplaying() {
-      // if (!playerState.playing.get() && sound.playState === 1) {
-      //   playerStateSetter.playing(track, type);
-      // }
+      if (!playerStatus.playing && sound.playState === 1) {
+        playerStateSetter.playing(track, type);
+      }
     },
 
     whileloading() {},
     onerror(errorCode: any, description: any) {
-      // playerStateSetter.error(errorCode, description);
+      playerStateSetter.error(errorCode, description);
     },
     onload() {},
     onpause() {
-      // playerStateSetter.cleanUp();
+      playerStateSetter.cleanUp();
     },
     onresume() {},
     onstop() {
-      // playerStateSetter.stopped();
+      playerStateSetter.stopped();
     },
     onbufferchange() {
-      // playerStateSetter.buffering();
+      playerStateSetter.buffering();
     },
     onfinish() {},
 
@@ -121,29 +125,29 @@ player.pause = () => {
 };
 
 player.setVolume = (volume: any) => {
-  // if (playerState.type.get() === 'hls') {
-  //   hlsAudio.volume = volume / 100;
-  //   return;
-  // }
-  // soundManager.setVolume(volume);
+  if (hlsRef) {
+    hlsAudio.volume = volume / 100;
+    return;
+  }
+  soundManager.setVolume(volume);
 };
 
 player.mute = () => {
   soundManager.mute();
-  // playerStateSetter.muted();
+  playerStateSetter.muted();
 };
 
 player.cleanUp = () => {
-  const id = soundManager.getSoundById('tarana');
+  const id = soundManager?.getSoundById('tarana');
 
   if (id) {
     id.destruct();
 
-    // playerStateSetter.cleanUp();
+    playerStateSetter.cleanUp();
   }
   if (hlsRef) {
     hlsRef.destroy();
-    // playerStateSetter.cleanUp();
+    playerStateSetter.cleanUp();
   }
 };
 
