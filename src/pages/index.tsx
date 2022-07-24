@@ -97,7 +97,19 @@ const Home: NextPage = () => {
           ) : (
             <h2></h2>
           )}
-          {JSON.stringify({ buffering: playerStatus['buffering'] })}
+          <button
+            className='bg-[#00AC7C] rounded-full overflow-hidden h-8 w-40 motion-safe:active:scale-95 duration-300 ml-4'
+            onClick={() =>
+              playerStatus.playing
+                ? player.pause()
+                : player.play(playerStatus?.nowPlaying)
+            }>
+            {playerStatus.playing
+              ? 'Pause'
+              : playerStatus.buffering && !playerStatus.playing
+              ? 'Buffering'
+              : 'Play'}
+          </button>
         </div>
       </main>
     </div>
