@@ -1,12 +1,24 @@
 import Hls from 'hls.js';
 import playerStateSetter from '../states/setters/player';
 import useStore from '../states/useStore';
+import { Base64 } from '../utils/base64';
 const { playerStatus } = useStore.getState();
 
 const pendingCalls: any = [];
 let soundManager: any;
 let hlsRef: any;
 let hlsAudio: any;
+
+const openUnsecurePlayerTab = (encodedUrl: any) => {
+  if (typeof window !== 'undefined') {
+    window
+      .open(
+        `http://extplayerradioindia.000webhostapp.com?stream=${encodedUrl}`,
+        '_blank'
+      )
+      ?.focus();
+  }
+};
 
 // Allow server side rendering
 if (typeof window !== 'undefined') {
@@ -30,6 +42,12 @@ player.play = (track: any) => {
   player.cleanUp();
   const stream = JSON.parse(track.streams)[0];
   const type = stream.indexOf('.m3u8') === -1 ? 'sm2' : 'hls';
+  const isHTTP = stream.indexOf('http:') !== -1;
+  if (isHTTP) {
+    var encodedUrl = Base64.encode(JSON.stringify(track));
+    openUnsecurePlayerTab(encodedUrl);
+    return;
+  }
 
   if (type === 'hls') {
     hlsAudio = document.getElementById('tarana');
