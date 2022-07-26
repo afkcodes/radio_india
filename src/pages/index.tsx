@@ -57,12 +57,11 @@ const Home: NextPage = () => {
             <div key={station.radio_uid} className='flex justify-center'>
               <div
                 className='flex flex-col items-center gap-1 cursor-pointer transform transition
-             sm:motion-safe:hover:bg-[#1D1D1D] duration-300 focus:outline-none rounded-md h-56 w-44 justify-center '>
-                <div
-                  className='rounded-md overflow-hidden h-50 w-40 motion-safe:active:scale-95 duration-300'
-                  onClick={() => {
-                    playRadio(station);
-                  }}>
+             sm:motion-safe:hover:bg-[#1D1D1D] duration-300 focus:outline-none rounded-md h-56 w-44 justify-center motion-safe:active:scale-95'
+                onClick={() => {
+                  playRadio(station);
+                }}>
+                <div className='rounded-md overflow-hidden h-50 w-40 '>
                   <Image
                     src={station.player_image}
                     width='100%'
