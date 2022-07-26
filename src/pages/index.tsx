@@ -21,22 +21,22 @@ const Home: NextPage = () => {
       <audio id='tarana' />
       <aside className='bg-[#111111] w-[17rem] hidden lg:flex shadow-md justify-center '>
         <ul className='flex flex-col w-full pt-2'>
-          <li className='pl-8 py-4 text-md font-semibold sm:motion-safe:hover:text-[#00AC7C] hover:bg-[#00ac7b15] duration-200 focus:outline-none cursor-pointer hover:border-r  border-[#00AC7C]'>
+          <li className='pl-8 py-4 text-md font-medium sm:motion-safe:hover:text-[#00AC7C] hover:bg-[#00ac7b15] duration-200 focus:outline-none cursor-pointer hover:border-r  border-[#00AC7C]'>
             Hindi Radios
           </li>
-          <li className='pl-8 py-4 text-md font-semibold sm:motion-safe:hover:text-[#00AC7C] hover:bg-[#00ac7b15] duration-200 focus:outline-none cursor-pointer hover:border-r  border-[#00AC7C]'>
+          <li className='pl-8 py-4 text-md font-medium sm:motion-safe:hover:text-[#00AC7C] hover:bg-[#00ac7b15] duration-200 focus:outline-none cursor-pointer hover:border-r  border-[#00AC7C]'>
             Mirchi Radios
           </li>
-          <li className='pl-8 py-4 text-md font-semibold sm:motion-safe:hover:text-[#00AC7C] hover:bg-[#00ac7b15] duration-200 focus:outline-none cursor-pointer hover:border-r border-[#00AC7C]'>
+          <li className='pl-8 py-4 text-md font-medium sm:motion-safe:hover:text-[#00AC7C] hover:bg-[#00ac7b15] duration-200 focus:outline-none cursor-pointer hover:border-r border-[#00AC7C]'>
             Telugu
           </li>
-          <li className='pl-8 py-4 text-md font-semibold sm:motion-safe:hover:text-[#00AC7C] hover:bg-[#00ac7b15] duration-200 focus:outline-none cursor-pointer hover:border-r  border-[#00AC7C]'>
+          <li className='pl-8 py-4 text-md font-medium sm:motion-safe:hover:text-[#00AC7C] hover:bg-[#00ac7b15] duration-200 focus:outline-none cursor-pointer hover:border-r  border-[#00AC7C]'>
             Kanada
           </li>
-          <li className='pl-8 py-4 text-md font-semibold sm:motion-safe:hover:text-[#00AC7C] hover:bg-[#00ac7b15] duration-200 focus:outline-none cursor-pointer hover:border-r  border-[#00AC7C]'>
+          <li className='pl-8 py-4 text-md font-medium sm:motion-safe:hover:text-[#00AC7C] hover:bg-[#00ac7b15] duration-200 focus:outline-none cursor-pointer hover:border-r  border-[#00AC7C]'>
             Malayalam
           </li>
-          <li className='pl-8 py-4 text-md font-semibold sm:motion-safe:hover:text-[#00AC7C] hover:bg-[#00ac7b15] duration-200 focus:outline-none cursor-pointer hover:border-r  border-[#00AC7C]'>
+          <li className='pl-8 py-4 text-md font-medium sm:motion-safe:hover:text-[#00AC7C] hover:bg-[#00ac7b15] duration-200 focus:outline-none cursor-pointer hover:border-r  border-[#00AC7C]'>
             Punjabi
           </li>
         </ul>
@@ -72,7 +72,7 @@ const Home: NextPage = () => {
                     loading='lazy'
                   />
                 </div>
-                <div className='w-40 flex flex-col'>
+                <div className='w-40 flex flex-col text-center '>
                   <p className='overflow-hidden whitespace-nowrap text-ellipsis'>
                     {station.name}
                   </p>

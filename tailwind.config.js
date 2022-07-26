@@ -10,9 +10,9 @@ module.exports = {
         '3xl': '2000px',
       },
       fontFamily: {
-        sans: ['Poppins', ...defaultTheme.fontFamily.sans],
-        serif: ['Poppins', ...defaultTheme.fontFamily.serif],
-        mono: ['Poppins', ...defaultTheme.fontFamily.mono],
+        sans: ['Lexend', ...defaultTheme.fontFamily.sans],
+        serif: ['Lexend', ...defaultTheme.fontFamily.serif],
+        mono: ['Lexend', ...defaultTheme.fontFamily.mono],
       },
     },
   },
