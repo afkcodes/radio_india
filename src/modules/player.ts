@@ -120,7 +120,9 @@ player.play = (track: any) => {
     onbufferchange() {
       playerStateSetter.buffering();
     },
-    onfinish() {},
+    onfinish() {
+      playerStateSetter.cleanUp();
+    },
 
     onstalled() {
       console.log('---------> stalled');
