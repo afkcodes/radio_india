@@ -1,17 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import type { NextPage } from 'next';
 import Image from 'next/image';
-import hindi from '../../stations/hindi.json';
 import {
-  RiPlayCircleFill,
-  RiPauseCircleFill,
-  RiLoader3Line,
   RiLoader5Line,
+  RiPlayCircleFill,
+  RiStopCircleFill,
 } from 'react-icons/ri';
+import hindi from '../../stations/hindi.json';
 
+import { useEffect } from 'react';
 import player from '../modules/player';
 import useStore from '../states/useStore';
-import { useEffect } from 'react';
 const Home: NextPage = () => {
   // const stations = hungama.data.stations.filter(
   //   (value, index, self) =>
@@ -138,22 +137,25 @@ const Home: NextPage = () => {
         </div>
 
         {playerStatus.playing ? (
-          <RiPauseCircleFill
-            size={55}
-            color='#00AC7C'
-            scale={1.5}
-            className='motion-safe:hi:scale-2 duration-300 cursor-pointer'
-            onClick={handlePlayOrPause}
-          />
+          <div className='cursor-pointer transform transition duration-300 focus:outline-none  justify-center motion-safe:active:scale-95'>
+            <RiStopCircleFill
+              size={55}
+              color='#00AC7C'
+              scale={1.5}
+              onClick={handlePlayOrPause}
+            />
+          </div>
         ) : playerStatus.buffering && !playerStatus.playing ? (
           <RiLoader5Line size={55} color='#00AC7C' className='animate-spin' />
         ) : (
-          <RiPlayCircleFill
-            size={55}
-            color='#00AC7C'
-            className='motion-safe:active:scale-2 duration-300 cursor-pointer'
-            onClick={handlePlayOrPause}
-          />
+          <div className='motion-safe:hi:scale-2 duration-300 cursor-pointer'>
+            <RiPlayCircleFill
+              size={55}
+              color='#00AC7C'
+              className='cursor-pointer transform transition duration-300 focus:outline-none  justify-center motion-safe:active:scale-95'
+              onClick={handlePlayOrPause}
+            />
+          </div>
         )}
       </div>
     </div>
