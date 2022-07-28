@@ -135,10 +135,10 @@ const Home: NextPage = () => {
         </div>
 
         <div className='text-center'>
-          <p className='font-medium text-xl' id='radio_name'>
+          <p className='font-medium text-lg lg:text-xl' id='radio_name'>
             {playerStatus?.nowPlaying?.name}
           </p>
-          <p className='text-[0.8rem]' id='radio_category'>
+          <p className='text-[0.7rem]' id='radio_category'>
             {playerStatus?.nowPlaying?.categories?.split(',').join(', ')}
           </p>
         </div>
