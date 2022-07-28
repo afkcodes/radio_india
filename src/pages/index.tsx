@@ -4,6 +4,7 @@ import Image from 'next/image';
 import {
   RiLoader5Line,
   RiPlayCircleFill,
+  RiSearchLine,
   RiStopCircleFill,
 } from 'react-icons/ri';
 import hindi from '../../stations/hindi.json';
@@ -29,6 +30,10 @@ const Home: NextPage = () => {
 
   const playRadio = (track: any) => {
     player.play(track);
+    updatePlayerStatus({
+      ...playerStatus,
+      nowPlaying: track,
+    });
     localStorage.setItem('lastPlayed', JSON.stringify(track));
   };
 
@@ -74,7 +79,9 @@ const Home: NextPage = () => {
                 placeholder='Search your favorite stations'
                 className='p-3 rounded-full bg-[#1D1D1D] text-white outline-none w-full'
               />
-              <div className='px-4'>icon</div>
+              <div className='px-4'>
+                <RiSearchLine size={24} color='#00AC7C' />
+              </div>
             </div>
           </div>
           <div className='flex flex-wrap justify-evenly md:flex gap-2 lg:grid grid-cols-4 sm:justify-center xl:grid-cols-6 2xl:grid-cols-8 3xl:grid-cols-9 py-2'>
@@ -132,7 +139,7 @@ const Home: NextPage = () => {
             {playerStatus?.nowPlaying?.name}
           </p>
           <p className='text-[0.8rem]' id='radio_category'>
-            {playerStatus?.nowPlaying?.categories}
+            {playerStatus?.nowPlaying?.categories?.split(',').join(', ')}
           </p>
         </div>
 
