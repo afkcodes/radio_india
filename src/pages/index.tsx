@@ -1,17 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import type { NextPage } from 'next';
 import Image from 'next/image';
-import {
-  RiLoader5Line,
-  RiPlayCircleFill,
-  RiSearchLine,
-  RiStopCircleFill,
-} from 'react-icons/ri';
+import { RiSearchLine } from 'react-icons/ri';
 import hindi from '../../stations/hindi.json';
-
 import { useEffect } from 'react';
 import player from '../modules/player';
 import useStore from '../states/useStore';
+import { SideNavBar, PlayerFooter } from '../Components';
 const Home: NextPage = () => {
   // const stations = hungama.data.stations.filter(
   //   (value, index, self) =>
@@ -49,30 +44,10 @@ const Home: NextPage = () => {
     <div className='flex flex-col bg-black text-white'>
       <audio id='tarana' />
       <div className='flex'>
-        <aside className='bg-[#111111] w-[17rem] hidden lg:flex shadow-md justify-center '>
-          <ul className='flex flex-col w-full pt-2'>
-            <li className='pl-8 py-4 text-md font-medium sm:motion-safe:hover:text-[#00AC7C] hover:bg-[#00ac7b15] duration-200 focus:outline-none cursor-pointer hover:border-r  border-[#00AC7C]'>
-              Hindi Radios
-            </li>
-            <li className='pl-8 py-4 text-md font-medium sm:motion-safe:hover:text-[#00AC7C] hover:bg-[#00ac7b15] duration-200 focus:outline-none cursor-pointer hover:border-r  border-[#00AC7C]'>
-              Mirchi Radios
-            </li>
-            <li className='pl-8 py-4 text-md font-medium sm:motion-safe:hover:text-[#00AC7C] hover:bg-[#00ac7b15] duration-200 focus:outline-none cursor-pointer hover:border-r border-[#00AC7C]'>
-              Telugu
-            </li>
-            <li className='pl-8 py-4 text-md font-medium sm:motion-safe:hover:text-[#00AC7C] hover:bg-[#00ac7b15] duration-200 focus:outline-none cursor-pointer hover:border-r  border-[#00AC7C]'>
-              Kanada
-            </li>
-            <li className='pl-8 py-4 text-md font-medium sm:motion-safe:hover:text-[#00AC7C] hover:bg-[#00ac7b15] duration-200 focus:outline-none cursor-pointer hover:border-r  border-[#00AC7C]'>
-              Malayalam
-            </li>
-            <li className='pl-8 py-4 text-md font-medium sm:motion-safe:hover:text-[#00AC7C] hover:bg-[#00ac7b15] duration-200 focus:outline-none cursor-pointer hover:border-r  border-[#00AC7C]'>
-              Punjabi
-            </li>
-          </ul>
-        </aside>
-        <main className='h-screen w-full overflow-scroll'>
-          <div className='w-full flex justify-center sticky top-0 z-10 bg-black py-1'>
+        <SideNavBar />
+        {/* <SearchBar /> */}
+        <main className='h-screen w-full overflow-scroll pb-24 lg:w-85p lg:absolute lg:left-[19rem] pl-4 pr-2 lg:-ml-8 lg:pb-12'>
+          <div className='w-full lg:w-101p flex justify-center sticky top-0 z-10 bg-black py-2 -ml-4'>
             <div className=' rounded-full bg-[#1D1D1D] text-white outline-none w-96 flex items-center '>
               <input
                 type='text'
@@ -118,53 +93,10 @@ const Home: NextPage = () => {
           </div>
         </main>
       </div>
-      <div className='w-full flex justify-between items-center sticky bottom-0 z-10 bg-[#111111] p-4 h-22'>
-        <div className=' h-14 w-14 rounded-md overflow-hidden '>
-          <Image
-            src={
-              playerStatus?.nowPlaying?.player_image
-                ? playerStatus?.nowPlaying?.player_image
-                : 'https://cdn.statically.io/gh/afkcodes/dummy/f1f6fa87/rock.png'
-            }
-            height='100%'
-            width='100%'
-            alt={playerStatus?.nowPlaying?.name}
-            objectFit='contain'
-            loading='eager'
-          />
-        </div>
-
-        <div className='text-center'>
-          <p className='font-medium text-lg lg:text-xl' id='radio_name'>
-            {playerStatus?.nowPlaying?.name}
-          </p>
-          <p className='text-[0.7rem]' id='radio_category'>
-            {playerStatus?.nowPlaying?.categories?.split(',').join(', ')}
-          </p>
-        </div>
-
-        {playerStatus.playing ? (
-          <div className='cursor-pointer transform transition duration-300 focus:outline-none  justify-center motion-safe:active:scale-95'>
-            <RiStopCircleFill
-              size={55}
-              color='#00AC7C'
-              scale={1.5}
-              onClick={handlePlayOrPause}
-            />
-          </div>
-        ) : playerStatus.buffering && !playerStatus.playing ? (
-          <RiLoader5Line size={55} color='#00AC7C' className='animate-spin' />
-        ) : (
-          <div className='motion-safe:hi:scale-2 duration-300 cursor-pointer'>
-            <RiPlayCircleFill
-              size={55}
-              color='#00AC7C'
-              className='cursor-pointer transform transition duration-300 focus:outline-none  justify-center motion-safe:active:scale-95'
-              onClick={handlePlayOrPause}
-            />
-          </div>
-        )}
-      </div>
+      <PlayerFooter
+        playerStatus={playerStatus}
+        handlePlayOrPause={handlePlayOrPause}
+      />
     </div>
   );
 };
