@@ -46,7 +46,7 @@ const Home: NextPage = () => {
       <div className='flex'>
         <SideNavBar />
         {/* <SearchBar /> */}
-        <main className='h-screen w-full overflow-scroll pb-24 lg:w-85p lg:absolute lg:left-[19rem] pl-4 pr-2 lg:-ml-8 lg:pb-12'>
+        <main className='h-screen bg-black w-full overflow-scroll pb-24 lg:w-82p lg:absolute lg:left-[19rem] pl-4 pr-2 lg:-ml-8 lg:pb-12'>
           <div className='w-full lg:w-101p flex justify-center sticky top-0 z-10 bg-black py-2 -ml-4'>
             <div className=' rounded-full bg-[#1D1D1D] text-white outline-none w-96 flex items-center '>
               <input

@@ -14,7 +14,7 @@ const PlayerFooter: React.FC<PlayerProps> = ({
   playerStatus,
   handlePlayOrPause,
 }) => (
-  <div className='w-full flex justify-between items-center lg:w-85p fixed bottom-0 lg:left-[17rem] z-10 bg-[#111111] p-4 h-22'>
+  <div className='w-full flex justify-between items-center lg:w-82p fixed bottom-0 lg:left-[17rem] z-10 bg-[#111111] p-4 h-22'>
     <div className=' h-14 w-14 rounded-md overflow-hidden '>
       <Image
         src={
