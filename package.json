@@ -18,7 +18,8 @@
     "react-dom": "18.2.0",
     "react-icons": "^4.4.0",
     "soundmanager2": "^2.97.20170602",
-    "zustand": "^4.0.0-rc.4"
+    "zustand": "^4.0.0-rc.4",
+    "openplayerjs": "https://github.com/openplayerjs/openplayerjs.git#master"
   },
   "devDependencies": {
     "@types/node": "18.0.6",
