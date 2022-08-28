@@ -38,7 +38,12 @@ let playerRef: any = null;
 player.init = () => {
   let zPlayer = null;
   if (!playerRef) {
-    zPlayer = new OpenPlayerJS('tarana');
+    zPlayer = new OpenPlayerJS('tarana', {
+      hls: {
+        smoothQualityChange: true,
+        overrideNative: true,
+      },
+    });
   } else {
     zPlayer = playerRef;
   }
@@ -65,16 +70,25 @@ player.play = async (track: any) => {
     console.log('-----event loadstart', event);
   });
 
-  // console.log('------>', zPlayer.getMedia().duration);
+  zPlayer
+    .getElement()
+    .addEventListener('hlsFragParsingMetadata', (event: any) => {
+      console.log(event);
+    });
+
+  // zPlayer.getMedia().volume = 100;
+
+  console.log('------>', zPlayer.getMedia());
 
   // player.cleanUp();
   const stream = JSON.parse(track.streams)[0];
-  // const type = stream.indexOf('.m3u8') === -1 ? 'sm2' : 'hls';
+  const type = stream.indexOf('.m3u8') === -1 ? 'sm2' : 'hls';
   // const isHTTP = stream.indexOf('http:') !== -1;
 
+  const audioType = getMimeType(stream);
+  zPlayer.src = { src: stream, type: audioType };
+
   await zPlayer.init();
-  // const audioType = getMimeType(stream);
-  zPlayer.src = stream;
   await zPlayer.load();
   await zPlayer.play();
   // console.log(zPlayer);
