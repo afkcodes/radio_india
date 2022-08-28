@@ -36,62 +36,42 @@ const getMimeType = (url: string) => {
 
 let playerRef: any = null;
 player.init = () => {
-  let zPlayer = null;
   if (!playerRef) {
-    zPlayer = new OpenPlayerJS('tarana', {
-      hls: {
-        smoothQualityChange: true,
-        overrideNative: true,
-      },
+    playerRef = new OpenPlayerJS('tarana', {
+      forceNative: false,
     });
-  } else {
-    zPlayer = playerRef;
+    playerRef.init();
   }
-  playerRef = zPlayer;
-  return zPlayer;
+  return playerRef;
 };
 
 player.cleanUp = () => {
   if (playerRef) {
-    // playerRef.destroy();
-    console.log('cleaning----->');
+    playerRef.stop();
   }
 };
 
 player.play = async (track: any) => {
   player.cleanUp();
-  let zPlayer = player.init();
+  player.init();
 
-  zPlayer.getElement().addEventListener('playing', (event: any) => {
+  playerRef.getElement().addEventListener('playing', (event: any) => {
     console.log('-----event playing', event);
   });
 
-  zPlayer.getElement().addEventListener('loadstart', (event: any) => {
+  playerRef.getElement().addEventListener('loadstart', (event: any) => {
     console.log('-----event loadstart', event);
   });
 
-  zPlayer
-    .getElement()
-    .addEventListener('hlsFragParsingMetadata', (event: any) => {
-      console.log(event);
-    });
+  playerRef.getElement().addEventListener('canplay', () => {
+    console.log('------> volume', playerRef.getMedia().volume);
+  });
 
-  // zPlayer.getMedia().volume = 100;
-
-  console.log('------>', zPlayer.getMedia());
-
-  // player.cleanUp();
   const stream = JSON.parse(track.streams)[0];
-  const type = stream.indexOf('.m3u8') === -1 ? 'sm2' : 'hls';
-  // const isHTTP = stream.indexOf('http:') !== -1;
-
-  const audioType = getMimeType(stream);
-  zPlayer.src = { src: stream, type: audioType };
-
-  await zPlayer.init();
-  await zPlayer.load();
-  await zPlayer.play();
-  // console.log(zPlayer);
+  playerRef.src = stream;
+  await playerRef.load();
+  console.log('-----media', playerRef.getMedia());
+  playerRef.play();
 };
 
 export default player;
