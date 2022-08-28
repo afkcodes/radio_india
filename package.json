@@ -9,27 +9,24 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@master/css": "^1.35.7",
-    "@master/normal.css": "^1.9.5",
-    "framer-motion": "^6.5.1",
-    "hls.js": "^1.1.5",
-    "next": "12.2.2",
+    "hls.js": "^1.2.1",
+    "next": "12.2.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.4.0",
     "soundmanager2": "^2.97.20170602",
-    "zustand": "^4.0.0-rc.4",
     "openplayerjs": "https://github.com/openplayerjs/openplayerjs.git#master"
+    "zustand": "^4.1.1"
   },
   "devDependencies": {
-    "@types/node": "18.0.6",
-    "@types/react": "18.0.15",
+    "@types/node": "18.7.13",
+    "@types/react": "18.0.17",
     "@types/react-dom": "18.0.6",
-    "autoprefixer": "^10.4.7",
-    "eslint": "8.20.0",
-    "eslint-config-next": "12.2.2",
-    "postcss": "^8.4.14",
-    "tailwindcss": "^3.1.6",
-    "typescript": "4.7.4"
+    "autoprefixer": "^10.4.8",
+    "eslint": "8.23.0",
+    "eslint-config-next": "12.2.5",
+    "postcss": "^8.4.16",
+    "tailwindcss": "^3.1.8",
+    "typescript": "4.8.2"
   }
 }
