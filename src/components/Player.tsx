@@ -5,14 +5,14 @@ import {
   RiPlayCircleFill,
   RiStopCircleFill,
 } from 'react-icons/ri';
-import player from '../modules/player';
+// import player from '../modules/player';
 import useStore from '../states/useStore';
 
 const Player = () => {
   const { playerStatus, updatePlayerStatus } = useStore((state) => state);
 
   const playRadio = (track: any) => {
-    player.play(track);
+    // player.play(track);
     updatePlayerStatus({
       ...playerStatus,
       nowPlaying: track,
@@ -22,7 +22,7 @@ const Player = () => {
 
   const handlePlayOrPause = () => {
     if (playerStatus.playing) {
-      player.pause();
+      // player.pause();
     } else {
       playRadio(playerStatus.nowPlaying);
     }

@@ -1,13 +1,13 @@
 import Image from 'next/image';
 import React from 'react';
-import player from '../modules/player';
+// import player from '../modules/player';
 import useStore from '../states/useStore';
 
 const Tile = ({ station }: any) => {
   const { playerStatus, updatePlayerStatus } = useStore((state) => state);
 
   const playRadio = (track: any) => {
-    player.play(track);
+    // player.play(track);
     updatePlayerStatus({
       ...playerStatus,
       nowPlaying: track,

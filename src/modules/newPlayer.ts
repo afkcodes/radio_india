@@ -55,23 +55,42 @@ player.play = async (track: any) => {
   player.cleanUp();
   player.init();
 
-  playerRef.getElement().addEventListener('playing', (event: any) => {
-    console.log('-----event playing', event);
+  playerRef.getElement().addEventListener('waiting', (event: any) => {
+    console.log('----- BUFFERING -----');
   });
 
   playerRef.getElement().addEventListener('loadstart', (event: any) => {
-    console.log('-----event loadstart', event);
+    console.log('----- BUFFERING -----');
   });
 
-  playerRef.getElement().addEventListener('canplay', () => {
-    console.log('------> volume', playerRef.getMedia().volume);
+  playerRef.getElement().addEventListener('playing', (event: any) => {
+    console.log('----- PLAYING -----');
+  });
+
+  playerRef.getElement().addEventListener('progress', (event: any) => {
+    console.log('----- PROGRESSING -----');
+  });
+
+  playerRef.getElement().addEventListener('pause', (event: any) => {
+    console.log('----- PAUSED -----');
+  });
+
+  playerRef.getElement().addEventListener('seeking', (event: any) => {
+    console.log('----- SEEKING -----');
+  });
+
+  playerRef.getElement().addEventListener('durationchange', (event: any) => {
+    console.log('----- DURATION CHANGED -----');
+  });
+
+  playerRef.getElement().addEventListener('timeupdate', (event: any) => {
+    console.log('----- TIME UPDATED -----');
   });
 
   const stream = JSON.parse(track.streams)[0];
   playerRef.src = stream;
   await playerRef.load();
-  console.log('-----media', playerRef.getMedia());
-  playerRef.play();
+  await playerRef.play();
 };
 
 export default player;
