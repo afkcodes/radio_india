@@ -70,7 +70,7 @@ player.play = async (track: any) => {
 
   playerRef.getElement().addEventListener('pause', (event: any) => {
     // console.log('----- PAUSED -----');
-    player.stop();
+    playerRef.stop();
     playerStateSetter.cleanUp();
   });
 
