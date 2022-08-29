@@ -1,4 +1,5 @@
 import OpenPlayerJS from 'openplayerjs';
+import playerStateSetter from '../states/setters/player';
 
 const player: any = {};
 const type = 'audio';
@@ -39,10 +40,59 @@ player.init = () => {
   if (!playerRef) {
     playerRef = new OpenPlayerJS('tarana', {
       forceNative: false,
+      startTime: -1,
     });
     playerRef.init();
   }
   return playerRef;
+};
+
+player.play = async (track: any) => {
+  const stream = JSON.parse(track.streams)[0];
+
+  player.cleanUp();
+  player.init();
+  console.log(playerRef);
+
+  playerRef.getElement().addEventListener('waiting', (event: any) => {
+    // console.log('----- BUFFERING -----');
+    playerStateSetter.buffering();
+  });
+
+  playerRef.getElement().addEventListener('playing', (event: any) => {
+    // console.log('----- PLAYING -----');
+    playerStateSetter.playing(track, getMimeType(stream));
+  });
+
+  playerRef.getElement().addEventListener('progress', (event: any) => {
+    // console.log('----- PROGRESSING -----');
+  });
+
+  playerRef.getElement().addEventListener('pause', (event: any) => {
+    // console.log('----- PAUSED -----');
+    player.stop();
+    playerStateSetter.cleanUp();
+  });
+
+  playerRef.getElement().addEventListener('seeking', (event: any) => {
+    // console.log('----- SEEKING -----');
+  });
+
+  playerRef.getElement().addEventListener('durationchange', (event: any) => {
+    // console.log('----- DURATION CHANGED -----');
+  });
+
+  playerRef.getElement().addEventListener('timeupdate', (event: any) => {
+    // console.log('----- TIME UPDATED -----');
+  });
+
+  playerRef.getElement().addEventListener('playererror', function (event: any) {
+    // console.log('----- ERROR -----');
+  });
+
+  playerRef.src = stream;
+  await playerRef?.load();
+  await playerRef?.play();
 };
 
 player.cleanUp = () => {
@@ -51,46 +101,30 @@ player.cleanUp = () => {
   }
 };
 
-player.play = async (track: any) => {
-  player.cleanUp();
-  player.init();
+player.pause = () => {
+  if (playerRef) {
+    playerRef.pause();
+  }
+};
 
-  playerRef.getElement().addEventListener('waiting', (event: any) => {
-    console.log('----- BUFFERING -----');
-  });
+player.stop = () => {
+  if (playerRef) {
+    playerRef.stop();
+  }
+};
 
-  playerRef.getElement().addEventListener('loadstart', (event: any) => {
-    console.log('----- BUFFERING -----');
-  });
+player.setVolume = (volume: any) => {
+  if (playerRef) {
+    playerRef.getMedia().volume = volume / 100;
+    return;
+  }
+};
 
-  playerRef.getElement().addEventListener('playing', (event: any) => {
-    console.log('----- PLAYING -----');
-  });
-
-  playerRef.getElement().addEventListener('progress', (event: any) => {
-    console.log('----- PROGRESSING -----');
-  });
-
-  playerRef.getElement().addEventListener('pause', (event: any) => {
-    console.log('----- PAUSED -----');
-  });
-
-  playerRef.getElement().addEventListener('seeking', (event: any) => {
-    console.log('----- SEEKING -----');
-  });
-
-  playerRef.getElement().addEventListener('durationchange', (event: any) => {
-    console.log('----- DURATION CHANGED -----');
-  });
-
-  playerRef.getElement().addEventListener('timeupdate', (event: any) => {
-    console.log('----- TIME UPDATED -----');
-  });
-
-  const stream = JSON.parse(track.streams)[0];
-  playerRef.src = stream;
-  await playerRef.load();
-  await playerRef.play();
+player.mute = () => {
+  if (playerRef) {
+    playerRef.getMedia().muted = true;
+    playerStateSetter.muted();
+  }
 };
 
 export default player;
