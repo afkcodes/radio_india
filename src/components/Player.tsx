@@ -5,7 +5,8 @@ import {
   RiPlayCircleFill,
   RiStopCircleFill,
 } from 'react-icons/ri';
-import player from '../modules/player';
+import player from '../modules/newPlayer';
+// import player from '../modules/player';
 import useStore from '../states/useStore';
 
 const Player = () => {

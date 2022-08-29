@@ -4,11 +4,11 @@ import Image from 'next/image';
 import { RiSearchLine } from 'react-icons/ri';
 import hindi from '../../stations/hindi.json';
 
-import { useEffect } from 'react';
-import Player from '../components/Player';
-import player from '../modules/player';
-import useStore from '../states/useStore';
 import Link from 'next/link';
+import { useEffect } from 'react';
+// import player from '../modules/player';
+import useStore from '../states/useStore';
+import player from '../modules/newPlayer';
 const Home: NextPage = () => {
   // const stations = hungama.data.stations.filter(
   //   (value, index, self) =>
