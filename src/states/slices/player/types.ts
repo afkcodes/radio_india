@@ -13,4 +13,5 @@ export interface PlayerStatusSliceTypes {
     type: string;
   };
   updatePlayerStatus: (state: any) => void;
+  fetchAndPlay: () => void;
 }

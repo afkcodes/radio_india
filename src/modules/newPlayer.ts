@@ -48,11 +48,10 @@ player.init = () => {
 };
 
 player.play = async (track: any) => {
-  const stream = JSON.parse(track.streams)[0];
+  const stream = track.previewURL; //JSON.parse(track.streams)[0];
 
   player.cleanUp();
   player.init();
-  console.log(playerRef);
 
   playerRef.getElement().addEventListener('waiting', (event: any) => {
     // console.log('----- BUFFERING -----');
@@ -87,7 +86,7 @@ player.play = async (track: any) => {
   });
 
   playerRef.getElement().addEventListener('playererror', function (event: any) {
-    // console.log('----- ERROR -----');
+    console.log('----- ERROR CAPTURED -----');
   });
 
   playerRef.src = stream;
