@@ -15,7 +15,9 @@ const Home: NextPage = () => {
   //     index === self.findIndex((t) => t.radio_uid === value.radio_uid)
   // );
   // console.log(stations);
-  const { playerStatus, updatePlayerStatus } = useStore((state) => state);
+  const { playerStatus, updatePlayerStatus, fetchAndPlay } = useStore(
+    (state) => state
+  );
 
   useEffect(() => {
     const lastPlayed = localStorage.getItem('lastPlayed');
@@ -112,7 +114,8 @@ const Home: NextPage = () => {
                   className='flex flex-col items-center gap-1 cursor-pointer transform transition
              sm:motion-safe:hover:bg-[#1D1D1D] duration-300 focus:outline-none rounded-md h-56 w-44 justify-center motion-safe:active:scale-95'
                   onClick={() => {
-                    playRadio(station);
+                    // playRadio(station);
+                    fetchAndPlay();
                   }}>
                   <div className='rounded-md overflow-hidden h-50 w-40 '>
                     <Image
